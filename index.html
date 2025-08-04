@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <img src="https://github-readme-stats-7n0qfyhgm-yousun4423s-projects.vercel.app/api/top-langs/?username=YouSun4423&layout=compact&count_private=true">
-    <img src="https://github-readme-stats-7n0qfyhgm-yousun4423s-projects.vercel.app/api/top-langs/?username=YouSun4423&layout=compact">
+    <img id="langs" />
+
+    <script>
+      const target = "https://github-readme-stats-7n0qfyhgm-yousun4423s-projects.vercel.app/api/top-langs/?username=YouSun4423&layout=compact&count_private=true";
+
+      fetch(target)
+        .then(res => res.blob())
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          document.getElementById("langs").src = url;
+        });
+    </script>
   </body>
 </html>
