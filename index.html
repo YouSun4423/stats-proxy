@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html>
   <body>
-    <img id="langs" />
+    <img id="langs" alt="GitHub Stats" />
+    <p id="error" style="color: red;"></p>
 
     <script>
       const target = "https://github-readme-stats-7n0qfyhgm-yousun4423s-projects.vercel.app/api/top-langs/?username=YouSun4423&layout=compact&count_private=true";
 
       fetch(target)
-        .then(res => res.blob())
+        .then(res => {
+          const contentType = res.headers.get("Content-Type") || "";
+          if (!contentType.includes("image/svg+xml")) {
+            throw new Error("Non-image response: " + contentType);
+          }
+          return res.blob();
+        })
         .then(blob => {
           const url = URL.createObjectURL(blob);
           document.getElementById("langs").src = url;
+        })
+        .catch(err => {
+          document.getElementById("error").textContent = "⚠️ 画像の取得に失敗しました: " + err.message;
         });
     </script>
   </body>
